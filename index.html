@@ -81,7 +81,7 @@
         }
 
         .form-container input, .form-container select {
-            width: 100%;
+            width: 90%;
             padding: 12px;
             margin: 12px 0;
             border-radius: 6px;
@@ -346,7 +346,78 @@ button:active {
         transform: translateY(0);
     }
 }
+.add-button {
+            background-color: #f0e008;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        .options {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            flex-direction: column;
+        }
+
+        .options button {
+            background-color: #bb920b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .modalADD {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .modalADD.active {
+            display: block;
+        }
+
+        .modalADD input {
+            
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modalADD button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        
     </style>
 </head>
 <body>
@@ -355,10 +426,11 @@ button:active {
 
     <!-- Navigation Menu -->
     
+    
 
     <div class="form-container">
         
-        <div class="theme-toggle" onclick="toggleTheme()">🌙</div>
+        
         <nav class="navbar">
             <ul>
                 <li><a href="https://aroma-rh.github.io/F20GFHFGHGFHGFHHGFH/">Effectif</a></li>
@@ -424,10 +496,112 @@ button:active {
               </form>
         </div>
     </div>
+
+    <button class="add-button" onclick="toggleOptions()">+</button>
+    <div class="options" id="options">
+        <button onclick="openModal('modal-equipe')">Equipe</button>
+        <button onclick="openModal('modal-tache')">Tache</button>
+    </div>
+
+    <!-- Modal for Equipe -->
+    <div class="modalADD" id="modal-equipe">
+        <form id="dataFormequipe">
+            <h2>AJOUTER UNE ÉQUIPE</h2>
+            <label for="equipe">Equipe:</label><br>
+            <input id="Equipe" name="equipe" class="form-control" required>
+            </input><br>
+        
+            <label for="finca">Finca:</label><br>
+            <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" readonly><br>
+        
+            
+        
+            <button type="button" class="confirm-button" onclick="confirmequipe()" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;">
+                Confirmer
+              </button>
+              <button style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;" onclick="closeModal('modal-equipe')">Anuuler</button>
+
+          </form>
+    </div>
+
+    <!-- Modal for Tache -->
+    <div class="modalADD" id="modal-tache">
+        <form id="dataFormtarea">
+            <h2>AJOUTER UNE TÂCHE</h2>
+            
+            <label for="tarea">Equipe:</label><br><br>
+            <input id="Equipe" name="equipe" class="form-control" required>
+            </input><br>
+        
+            <label for="finca">Finca:</label><br><br>
+            <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" readonly><br>
+        
+            
+        
+            <button type="button" class="confirm-button" onclick="confirmtarea()" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;">
+                Confirmer
+              </button>
+              <button style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;" onclick="closeModal('modal-tache')">Anuuler</button>
+          </form>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-     
+     function toggleOptions() {
+            const options = document.getElementById('options');
+            options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('active');
+            const inputs = modal.querySelectorAll('input');
+            inputs.forEach(input => input.value = "");
+        }
+
+        
+
+        function confirmtarea() {
+      var formData = new FormData(document.getElementById('dataFormtarea'));
+
+      fetch('https://script.google.com/macros/s/AKfycbzOsCgMVvsK55ltc99yKYIptthZx-OAdaGC-Goz98Ze12h14iFSaGfY8ytujvVtWnvPQA/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Données soumises avec succès !');
+      })
+      .catch(error => {
+        alert('Error: ' + error);
+      });
+    }
+    function confirmequipe() {
+      var formData = new FormData(document.getElementById('dataFormequipe'));
+
+      fetch('https://script.google.com/macros/s/AKfycbxrNiQ31J6jIu6L3-q93B_D4VZqIjm9vs5zTt7MHLj3Ws2asZAW2cyO614AU2DrMiVPUQ/exec', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Données soumises avec succès !');
+      })
+      .catch(error => {
+        alert('Error: ' + error);
+      });
+    }
+
+
+
+
+
      function confirmSubmi() {
       var formData = new FormData(document.getElementById('dataForm1'));
 
