@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Effectif</title>
+    <title>EFFECTIF CAMPO</title>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
@@ -14,12 +14,7 @@
             --text-color: #333;
         }
 
-        [data-theme="dark"] {
-            --primary-color: #6bb9f0;
-            --secondary-color: #333;
-            --background-color: #1a1a1a;
-            --text-color: #ddd;
-        }
+       
 
         body {
             font-family: Arial, sans-serif;
@@ -54,10 +49,12 @@
             font-size: 1.1rem;
             margin-bottom: 8px;
             display: block;
+            font-weight: bold;
         }
 
         .form-container input, .form-container select {
             width: 99%;
+            font-weight: bold;
             padding: 12px;
             margin: 12px 0;
             border-radius: 6px;
@@ -65,6 +62,7 @@
             font-size: 1rem;
             box-sizing: border-box;
         }
+        
 
         .form-container button {
             background-color: var(--primary-color);
@@ -165,33 +163,32 @@
       
       
         #myModal {
-    display: none;
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-   
-    backdrop-filter: blur(5px); /* Smooth blur effect */
-}
+              display: none;
+              position: fixed;
+              z-index: 10;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              overflow: auto;
+              backdrop-filter: blur(5px);
+                 }
 
 #modalContent {
-    background: linear-gradient(135deg, #e0f7fa, #b3e5fc); /* Light blue gradient */
+    background: linear-gradient(135deg, #e0f7fa, #b3e5fc); 
     margin: 10% auto;
     padding: 30px;
-    border: 2px solid #0288d1; /* Blue border */
-    border-radius: 15px; /* Rounded corners */
+    border: 2px solid #0288d1; 
+    border-radius: 15px; 
     width: 50%;
-    max-width: 500px; /* Responsive width */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    max-width: 500px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
     text-align: left;
-    animation: fadeIn 0.5s ease; /* Animation for appearance */
+    animation: fadeIn 0.5s ease;
 }
 
 .close {
-    color: #01579b; /* Dark blue */
+    color: #01579b; 
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
@@ -201,7 +198,7 @@
 
 .close:hover,
 .close:focus {
-    color: #0288d1; /* Lighter blue on hover */
+    color: #0288d1; 
     text-decoration: none;
 }
 
@@ -210,16 +207,16 @@
     padding: 12px;
     width: 90%;
     font-size: 16px;
-    border: 1px solid #0288d1; /* Light blue border */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Inner shadow */
+    border: 1px solid #0288d1; 
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s ease;
 }
 
 .form-control:focus {
-    border-color: #01579b; /* Darker blue on focus */
+    border-color: #01579b; 
     outline: none;
-    box-shadow: 0 0 8px rgba(1, 87, 155, 0.5); /* Blue glow effect */
+    box-shadow: 0 0 8px rgba(1, 87, 155, 0.5); 
 }
 
 button {
@@ -228,25 +225,25 @@ button {
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background: linear-gradient(135deg, #0288d1, #01579b); /* Gradient button */
+    background: linear-gradient(135deg, #0288d1, #01579b); 
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); /* Shadow for button */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover {
-    transform: translateY(-2px); /* Slight lift effect */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); 
 }
 
 button:active {
-    transform: translateY(1px); /* Press-down effect */
+    transform: translateY(1px); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Fade-in animation */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -328,7 +325,7 @@ button:active {
             cursor: pointer;
         }
 
-        /* Toggle Button */
+        /* menu boton */
         .toggle-btn {
             position: fixed;
             top: 20px;
@@ -347,20 +344,20 @@ button:active {
 
         .toggle-btn:hover {
             background-color: #0066cc;
-            transform: scale(1.1); /* Slight zoom effect */
+            transform: scale(1.1); 
         }
 
-        /* Sidebar */
+        
         .sidebar {
             position: fixed;
             top: 0;
-            left: -300px; /* Initially hidden */
+            left: -300px; 
             width: 300px;
             height: 100%;
             background: linear-gradient(to bottom, #0059b3, #003366);
             box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
             color: #ffffff;
-            transition: left 0.4s ease; /* Smooth slide-in effect */
+            transition: left 0.4s ease; 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -368,35 +365,37 @@ button:active {
         }
 
         .sidebar.open {
-            left: 0; /* Fully visible when opened */
+            left: 0; 
         }
 
-        /* Sidebar Content */
+        
         .sidebar h3 {
             text-align: center;
             margin-top: 20px;
             font-size: 24px;
-            color: #cce7ff; /* Lighter blue text */
+            color: #cce7ff; 
         }
 
         .sidebar ul {
             list-style-type: none;
             padding: 20px;
-            margin: 0;
+            margin-top: 45px;
         }
 
         .sidebar ul li {
-            margin-top: 40px;
+            margin: 15px 0;
         }
 
         .sidebar ul li a {
             text-decoration: none;
             color: #cce7ff;
+            
+            font-weight: bold;
             font-size: 18px;
             padding: 10px 15px;
             display: block;
             border-radius: 5px;
-            transition: background 0.3s ease, color 0.3s ease;
+        
         }
 
         .sidebar ul li a:hover {
@@ -404,7 +403,7 @@ button:active {
             color: #ffffff;
         }
 
-        /* Close Arrow */
+      
         .close-arrow {
             cursor: pointer;
             color: #cce7ff;
@@ -413,13 +412,13 @@ button:active {
             border: none;
             position: absolute;
             top: 10px;
-            right: 10px; /* Positioned at the top right */
+            right: 10px; 
             transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .close-arrow:hover {
             color: #ffffff;
-            transform: rotate(180deg); /* Rotation effect on hover */
+            transform: rotate(180deg); 
         }
     </style>
 </head>
@@ -440,6 +439,7 @@ button:active {
            <li><a href="https://aroma-rh.github.io/LA-ABSE/">La Base</a></li>
            <li><a href="#">Methode de paiement</a></li>
            <li><a href="https://aroma-rh.github.io/POINTAGE/">Pointage</a></li>
+           
        </ul>
     </div><br><br><br><br>
     
@@ -452,7 +452,7 @@ button:active {
         
         <label for="equipe">Equipe:</label>
 
-        <select id="equipe" name="finca" required></select>
+        <select id="equipe" name="finca" required></select><br><br>
 
         <label for="finca" class="animated-label">Finca:</label>
         <input type="text" id="finca" name="numberPrs" value="FINCA 20" readonly>
@@ -461,13 +461,13 @@ button:active {
         <input type="date" id="date" name="date" value="" required>
 
         <label for="tarea" class="animated-label">Tarea:</label>
-        <select id="tarea" name="tarea" required></select>
+        <select id="tarea" name="tarea" required></select><br><br>
 
         <label for="numberPrs" class="animated-label">Number prs:</label>
         <input type="number" id="numberPrs" name="numberPrs" required>
 
-        <button type="button" onclick="submitData()">Envoyer</button><br>
-        <button id="openModal">EFFECTIF MINI BUSS </button><br>
+        <button type="button" onclick="submitData()">Envoyer</button>
+        <button id="openModal">Effectif mini bus </button>
         <button type="button" onclick="Contactez()">Contactez-nous</button>
         </form>
     </div>
@@ -558,21 +558,21 @@ button:active {
         const toggleBtn = document.getElementById('toggleBtn');
         const closeArrow = document.getElementById('closeArrow');
 
-        // Open Sidebar
+        // fath sidbar
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.add('open');
-            toggleBtn.style.transform = 'translateX(320px)'; // Move button to the right
+            toggleBtn.style.transform = 'translateX(320px)'; 
         });
 
-        // Close Sidebar
+        // ighla9 Sidebar
         closeArrow.addEventListener('click', () => {
             closeSidebar();
         });
 
-        // Close Sidebar Function
+        // ighla9 Sidebar Function
         function closeSidebar() {
             sidebar.classList.remove('open');
-            toggleBtn.style.transform = 'translateX(0)'; // Reset button position
+            toggleBtn.style.transform = 'translateX(0)'; 
         }
 
         // Close Sidebar on Click Outside
