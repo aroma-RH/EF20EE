@@ -31,31 +31,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Navigation Menu */
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 15px;
-            background-color: var(--secondary-color);
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            border-radius: 8px;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .nav-menu a:hover {
-            color: var(--primary-color);
-        }
+        
 
         h1 {
             text-align: center;
@@ -186,73 +162,8 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* Navigation Menu Styles */
-        .navbar {
-            display: flex;
-            margin-bottom: 30px;
-            
-            justify-content: center;
-            background-color: var(--primary-color);
-            padding: 10px;
-            
-        }
-
-        .navbar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar li {
-            position: relative;
-            margin: 0 2px;
-        }
-
-        .navbar a {
-            color: rgb(0, 0, 0);
-            text-decoration: none;
-            padding: 10px;
-            font-size: 1rem;
-        }
-
-        .navbar li:hover > a {
-            background-color: #357ab7;
-            border-radius: 5px;
-        }
-
-        /* Submenu */
-        .navbar li ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--primary-color);
-            padding: 10px 0;
-            min-width: 150px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
-
-        .navbar li:hover ul {
-            display: block;
-        }
-
-        .navbar li ul li {
-            margin: 0;
-        }
-
-        .navbar li ul a {
-            display: block;
-            padding: 8px 15px;
-            font-size: 0.9rem;
-        }
-
-        .navbar li ul a:hover {
-            background-color: #357ab7;
-            border-radius: 5px;
-        }
+      
+      
         #myModal {
     display: none;
     position: fixed;
@@ -417,7 +328,99 @@ button:active {
             cursor: pointer;
         }
 
-        
+        /* Toggle Button */
+        .toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #0059b3;
+            color: #ffffff;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background-color: #0066cc;
+            transform: scale(1.1); /* Slight zoom effect */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px; /* Initially hidden */
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(to bottom, #0059b3, #003366);
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
+            color: #ffffff;
+            transition: left 0.4s ease; /* Smooth slide-in effect */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 999;
+        }
+
+        .sidebar.open {
+            left: 0; /* Fully visible when opened */
+        }
+
+        /* Sidebar Content */
+        .sidebar h3 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #cce7ff; /* Lighter blue text */
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin-top: 40px;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #cce7ff;
+            font-size: 18px;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #004080;
+            color: #ffffff;
+        }
+
+        /* Close Arrow */
+        .close-arrow {
+            cursor: pointer;
+            color: #cce7ff;
+            font-size: 24px;
+            background: transparent;
+            border: none;
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Positioned at the top right */
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .close-arrow:hover {
+            color: #ffffff;
+            transform: rotate(180deg); /* Rotation effect on hover */
+        }
     </style>
 </head>
 <body>
@@ -425,20 +428,26 @@ button:active {
     
 
     <!-- Navigation Menu -->
-    
+    <button class="toggle-btn" id="toggleBtn">☰ Menu</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+       <!-- Close Arrow -->
+       <button class="close-arrow" id="closeArrow">⮜</button>
+       <h3>Navigation</h3>
+       <ul>
+           <li><a href="https://aroma-rh.github.io/F20GFHFGHGFHGFHHGFH/">Effectif</a></li>
+           <li><a href="https://aroma-rh.github.io/LA-ABSE/">La Base</a></li>
+           <li><a href="#">Methode de paiement</a></li>
+           <li><a href="https://aroma-rh.github.io/POINTAGE/">Pointage</a></li>
+       </ul>
+    </div><br><br><br><br>
     
 
     <div class="form-container">
+       
         
-        
-        <nav class="navbar">
-            <ul>
-                <li><a href="https://aroma-rh.github.io/F20GFHFGHGFHGFHHGFH/">Effectif</a></li>
-                <li><a href="https://aroma-rh.github.io/LA-ABSE/">La Base</a></li>
-                <li><a href="#">Methode de paiement</a></li>
-                <li><a href="https://aroma-rh.github.io/POINTAGE/">Pointage</a></li>
-            </ul>
-        </nav>
+       
         <form id="dataForm">
         
         <label for="equipe">Equipe:</label>
@@ -545,6 +554,35 @@ button:active {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+       const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const closeArrow = document.getElementById('closeArrow');
+
+        // Open Sidebar
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            toggleBtn.style.transform = 'translateX(320px)'; // Move button to the right
+        });
+
+        // Close Sidebar
+        closeArrow.addEventListener('click', () => {
+            closeSidebar();
+        });
+
+        // Close Sidebar Function
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            toggleBtn.style.transform = 'translateX(0)'; // Reset button position
+        }
+
+        // Close Sidebar on Click Outside
+        document.addEventListener('click', (event) => {
+            if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                closeSidebar();
+            }
+        });
+
+
      function toggleOptions() {
             const options = document.getElementById('options');
             options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
