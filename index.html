@@ -429,12 +429,9 @@ button:active {
 
     
 
-    <!-- Navigation Menu -->
+    <!-- menu boton -->
     <button class="toggle-btn" id="toggleBtn">☰ Menu</button>
-
-    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-       <!-- Close Arrow -->
        <button class="close-arrow" id="closeArrow">⮜</button>
        <h3>Menu de Navigation</h3>
        <ul>
@@ -446,7 +443,7 @@ button:active {
        </ul>
     </div><br><br><br><br>
     
-
+<!-- effectif -->
     <div class="form-container">
        
         
@@ -484,6 +481,7 @@ button:active {
             <button class="confirm-button" onclick="confirmSubmit()">Confirmer</button>
         </div>
     </div>
+    <!-- mini bus -->
     <div id="myModal">
         <div id="modalContent">
             <span class="close" id="closeModal">&times;</span>
@@ -516,7 +514,7 @@ button:active {
         <button onclick="openModal('modal-tache')">Tache</button>
     </div>
 
-    <!-- Modal for Equipe -->
+    <!-- Equipe -->
     <div class="modalADD" id="modal-equipe">
         <form id="dataFormequipe">
             <h2>AJOUTER UNE ÉQUIPE</h2>
@@ -534,7 +532,7 @@ button:active {
           </form>
     </div>
 
-    <!-- Modal for Tache -->
+    <!-- Tache -->
     <div class="modalADD" id="modal-tache">
         <form id="dataFormtarea">
             <h2>AJOUTER UNE TÂCHE</h2>
@@ -579,7 +577,7 @@ button:active {
             toggleBtn.style.transform = 'translateX(0)'; 
         }
 
-        // Close Sidebar on Click Outside
+       
         document.addEventListener('click', (event) => {
             if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
                 closeSidebar();
