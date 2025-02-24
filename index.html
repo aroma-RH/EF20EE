@@ -1,281 +1,287 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EFFECTIF CAMPO</title>
-
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <style>
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #f9f9f9;
-            --background-color: #ffffff;
-            --text-color: #333;
+       
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #000000;
         }
 
        
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            background-image: url("body.jpg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
         }
 
-        
+        .container:hover {
+            transform: scale(1.02);
+        }
 
         h1 {
             text-align: center;
-            color: green;
-            font-size: 2rem;
-            text-shadow: 0px 0px 10px cyan,
-                         0px 0px 10px cyan,
-                         0px 0px 10px cyan,
-                         0px 0px 10px cyan;
+            font-size: 2.5rem;
+            color: #00796b;
+            margin-bottom: 20px;
         }
 
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 25px;
-            border-radius: 12px;
-            background-color: var(--secondary-color);
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            position: relative;
-            transition: background-color 0.3s ease;
-            backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
+        /* تنسيق الحقول المدخلة */
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            gap: 20px;
         }
 
-        .form-container label {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            display: block;
-            font-weight: bold;
-        }
-
-        .form-container input, .form-container select {
-            width: 99%;
-            font-weight: bold;
-            padding: 12px;
-            margin: 12px 0;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        
-
-        .form-container button {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+        .input-group input,
+        .input-group select,
+        .input-group button {
+            padding: 12px 20px;
             width: 100%;
-            transition: background-color 0.3s ease;
-        }
-       
-        .form-container button:hover {
-            background-color: #357ab7;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: border 0.3s ease;
         }
 
-        .confirmation-modal {
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+
+        .input-group button {
+            background-color: #00796b;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .input-group button:hover {
+            background-color: #004d40;
+        }
+
+        /* تنسيق القائمة التي تحتوي على المهام */
+        .task-list {
+            display: grid;
+            width: 90%;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            margin-top: 30px;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            width: 80%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .task-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .task-item input[type="number"] {
+            width: 80px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            font-size: 16px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .task-item input[type="number"]:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+
+        /* تأثير المودال */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
             opacity: 0;
-            animation: fadeIn 0.5s forwards;
-            backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
+            transition: opacity 0.3s ease;
         }
 
-        .confirmation-modal .modal-content {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding: 25px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            position: relative;
-            backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
+        .modal.show {
+            display: flex;
+            opacity: 1;
         }
 
-        .modal-content h3 {
-            color: var(--primary-color);
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-footer button {
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #00796b;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-footer button:hover {
+            background-color: #004d40;
+        }
+
+        .task-list-modal {
+            max-height: 300px;
+            overflow-y: auto;
             margin-bottom: 20px;
         }
 
-        .modal-content p {
-            margin: 12px 0;
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        .modal-content button {
-            margin: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
+        .task-list-modal label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
             cursor: pointer;
         }
 
-        .modal-content .confirm-button {
-            background-color: var(--primary-color);
-            color: white;
-            margin: 2px;
+        .task-list-modal input[type="checkbox"] {
+            margin-right: 10px;
         }
 
-        .modal-content .cancel-button {
-            background-color: #ddd;
-            color: #333;
+       
+        #search-task {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
         }
 
-        .theme-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: var(--text-color);
-            background: var(--secondary-color);
-            border: 1px solid var(--primary-color);
-            transition: all 0.3s ease;
+        #search-task:focus {
+            border-color: #00796b;
+            outline: none;
         }
 
-        .theme-toggle:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-      
-      
-        #myModal {
-              display: none;
-              position: fixed;
-              z-index: 10;
-              left: 0;
-              top: 0;
-              width: 100%;
-              height: 100%;
-              overflow: auto;
-              backdrop-filter: blur(5px);
-              backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
-                 }
-
-#modalContent {
-    background: linear-gradient(135deg, #e0f7fa, #b3e5fc); 
-    margin: 10% auto;
-    padding: 30px;
-    border: 2px solid #0288d1; 
-    border-radius: 15px; 
-    width: 50%;
-    font-weight: bold;
-    max-width: 500px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); 
-    text-align: left;
-    animation: fadeIn 0.5s ease;
-    backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
-}
- 
-
-
-.close {
-    color: #01579b; 
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    text-align: left;
-}
-
-.close:hover,
-.close:focus {
-    color: #0288d1; 
-    text-decoration: none;
-}
-
-.form-control {
-    margin: 15px 0;
-    padding: 12px;
-    width: 90%;
-    font-size: 16px;
-    border: 1px solid #0288d1; 
+        .task-item {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
     border-radius: 8px;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease;
-    backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-control:focus {
-    border-color: #01579b; 
-    outline: none;
-    box-shadow: 0 0 8px rgba(1, 87, 155, 0.5); 
+.task-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
+
+.task-item input[type="number"] {
+    width: 80px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    font-size: 16px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+.task-item input[type="number"]:focus {
+    border-color: #00796b;
+    outline: none;
+}
+
 
 button {
-    margin-top: 20px;
+    background-color: #00796b;
+    color: white;
+    width: 100%;
     padding: 12px 25px;
     font-size: 16px;
     font-weight: bold;
-    color: #fff;
-    background: linear-gradient(135deg, #0288d1, #01579b); 
-    border: none;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
 }
 
 button:hover {
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); 
+    background-color: #004d40;
+    transform: translateY(-3px);
 }
 
-button:active {
-    transform: translateY(1px); 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+#total-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgb(10, 10, 10);
+    padding: 10px 20px;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    z-index: 9999;
+    width: auto;
 }
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 .add-button {
             background-color: #f0e008;
             color: rgb(0, 0, 0);
@@ -294,480 +300,188 @@ button:active {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .options {
-            display: none;
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            flex-direction: column;
-        }
-
-        .options button {
-            background-color: #bb920b;
-            color: rgb(255, 255, 255);
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
-        .modalADD {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(62, 148, 144, 0.973);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgb(0, 0, 0);
-            width: 300px;
-            backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
-        }
-
-        .modalADD.active {
-            display: block;
-        }
-
-        .modalADD input {
-            
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .modalADD button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* menu boton */
-        .toggle-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #0059b3;
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-btn:hover {
-            background-color: #0066cc;
-            transform: scale(1.1); 
-        }
-
-        
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px; 
-            width: 300px;
-            height: 100%;
-            background: linear-gradient(to bottom, #0059b3, #003366);
-            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.4);
-            color: #ffffff;
-            transition: left 0.4s ease; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 999;
-            backdrop-filter: blur(15px);
-            background: rgba(255,255,255, 0.2);
-        }
-
-        .sidebar.open {
-            left: 0; 
-        }
-
-        
-        .sidebar h3 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-            color: #01289b; 
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 20px;
-            margin-top: 45px;
-        }
-
-        .sidebar ul li {
-            margin: 15px 0;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #01289b;
-            
-            font-weight: bold;
-            font-size: 18px;
-            padding: 10px 15px;
-            display: block;
-            border-radius: 5px;
-        
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #004080;
-            color: #ffffff;
-        }
-
-      
-        .close-arrow {
-            cursor: pointer;
-            color: #01289b;
-            font-size: 30px;
-            background: transparent;
-            border: none;
-            position: absolute;
-            top: 10px;
-            right: 10px; 
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .close-arrow:hover {
-            color: #ffffff;
-            transform: rotate(180deg); 
-        }
     </style>
 </head>
 <body>
-
-    
-
-    <!-- menu boton -->
-    <button class="toggle-btn" id="toggleBtn">☰ Menu</button>
-    <div class="sidebar" id="sidebar">
-       <button class="close-arrow" id="closeArrow">⮜</button>
-       <h3>Menu de Navigation</h3>
-       <ul>
-           <li><a href="https://aroma-rh.github.io/POINTAGE-F20/">Pointage</a></li>
-           <li><a href="https://aroma-rh.github.io/F20GFHFGHGFHGFHHGFH/">Effectif</a></li>
-           <li><a href="https://aroma-rh.github.io/PRESENCE20/">C.Presence</a></li>
-           <li><a href="https://aroma-rh.github.io/LA-ABSE/">La Base</a></li>
-           <li><a href="https://aroma-rh.github.io/carts/">Nouveau Embauche</a></li>
-           <li><a href="https://aroma-rh.github.io/contra20/">Contract</a></li>
-           <li><a href="https://aroma-rh.github.io/rib/">RIB</a></li>
-           <li><a href="https://aroma-rh.github.io/HESPATEC/">Hispatec groupe</a></li>
-           
-       </ul>
-    </div><br><br><br><br>
-    
-<!-- effectif -->
-    <div class="form-container">
-       
+    <div class="container">
         
-       
-        <form id="dataForm">
-        
-        <label for="equipe">Equipe:</label>
+        <div id="total-container" style="text-align: right; font-size: 1.2rem; margin-bottom: 20px;"><span id="total-value">0</span>
+        </div>
+    
+    <div class="container">
+        <div class="input-group">
+            <input type="date" id="task-date">
+            <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" style="display: none;" readonly>
+            <select id="task-category" name="finca" required></select>
+            <button onclick="openModal()">LES TACHES </button>
+        </div>
 
-        <select id="equipe" name="finca" required></select><br><br>
+        <div class="task-list" id="selected-tasks"></div>
 
-        <label for="finca" class="animated-label">Finca:</label>
-        <input type="text" id="finca" name="numberPrs" value="FINCA 20" readonly>
-
-        <label for="date" class="animated-label">Date:</label>
-        <input type="date" id="date" name="date" value="" required>
-
-        <label for="tarea" class="animated-label">Tarea:</label>
-        <select id="tarea" name="tarea" required></select><br><br>
-
-        <label for="numberPrs" class="animated-label">Number prs:</label>
-        <input type="number" id="numberPrs" name="numberPrs" required>
-
-        <button type="button" onclick="submitData()">Envoyer</button>
-        <button id="openModal">Effectif mini bus </button>
-        <button type="button" onclick="Contactez()">Contactez-nous</button>
-        </form>
+        <button onclick="sendData()">Envoyer </button>
     </div>
 
-    <div class="confirmation-modal" id="confirmationModal">
+    
+    <div class="modal" id="taskModal">
         <div class="modal-content">
-            <h3>Confirmer les données</h3>
-            <p id="confirmationText"></p>
-            
-            <button class="cancel-button" onclick="closeConfirmation()">Annuler</button>
-            <button class="confirm-button" onclick="confirmSubmit()">Confirmer</button>
-        </div>
-    </div>
-    <!-- mini bus -->
-    <div id="myModal">
-        <div id="modalContent">
-            <span class="close" id="closeModal">&times;</span>
-            <h2>Effectif mini bus</h2>
-            <form id="dataForm1">
-                <label for="combobox">Equipe:</label>
-                <select id="combobox" name="equipe" class="form-control" required>
-                </select><br>
-            
-                <label for="finca">Finca:</label>
-                <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" readonly><br>
-            
-                <label for="dateInput">Date:</label>
-                <input type="date" id="dateInput" name="dateInput" class="form-control" required><br>
-            
-                <label for="textInput">Effectif:</label>
-                <input type="number" id="textInput" name="effectif" class="form-control" placeholder="Effectif" required><br>
-            
-                <button type="button" class="confirm-button" onclick="confirmSubmi()" style="display: flex; justify-content: center; align-items: center; width: 100px; height: 40px;">
-                    Confirmer
-                  </button>
-              </form>
+            <h2>Choisissez des tâches </h2>
+            <input type="text" id="search-task" placeholder="recherche d'une tâche..." onkeyup="filterTasks()">
+            <div class="task-list-modal" id="task-list-modal"></div>
+            <div class="modal-footer">
+                <button onclick="confirmSelection()">Confirmer</button>
+                <button onclick="closeModal()">Annuler</button>
+            </div>
         </div>
     </div>
     
 
-    <button class="add-button" onclick="toggleOptions()">+</button>
-    <div class="options" id="options">
-        <button onclick="openModal('modal-equipe')">Equipe</button>
-        <button onclick="openModal('modal-tache')">Tache</button>
-    </div>
-
-    <!-- Equipe -->
-    <div class="modalADD" id="modal-equipe">
-        <form id="dataFormequipe">
-            <h2>AJOUTER UNE ÉQUIPE</h2>
-            <label for="equipe">Equipe:</label><br>
-            <input id="Equipe" name="equipe" class="form-control" required>
-            </input><br>
-            <label for="finca">Finca:</label><br>
-            <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" readonly><br>
-        
-            <button type="button" class="confirm-button" onclick="confirmequipe()" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;">
-                Confirmer
-              </button>
-              <button style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;" onclick="closeModal('modal-equipe')">Anuuler</button>
-
-          </form>
-    </div>
-
-    <!-- Tache -->
-    <div class="modalADD" id="modal-tache">
-        <form id="dataFormtarea">
-            <h2>AJOUTER UNE TÂCHE</h2>
-            
-            <label for="tache">Tache:</label><br>
-            <input id="tache" name="tache" class="form-control" required>
-            </input><br>
-        
-            <label for="finca">Finca:</label><br>
-            <input type="text" id="finca" name="finca" value="FINCA 20" class="form-control" readonly><br>
-        
-            
-        
-            <button type="button" class="confirm-button" onclick="confirmtarea()" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;">
-                Confirmer
-              </button>
-              <button style="display: flex; justify-content: center; align-items: center; width: 100%; height: 40px;" onclick="closeModal('modal-tache')">Anuuler</button>
-          </form>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-       const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggleBtn');
-        const closeArrow = document.getElementById('closeArrow');
 
-        // fath sidbar
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.add('open');
-            toggleBtn.style.transform = 'translateX(320px)'; 
-        });
+document.getElementById("task-date").value = new Date().toISOString().split('T')[0];
 
-        // ighla9 Sidebar
-        closeArrow.addEventListener('click', () => {
-            closeSidebar();
-        });
 
-        // ighla9 Sidebar Function
-        function closeSidebar() {
-            sidebar.classList.remove('open');
-            toggleBtn.style.transform = 'translateX(0)'; 
+        let tasks = [];
+        let selectedTasks = [];
+
+        function openModal() {
+            const taskListModal = document.getElementById('task-list-modal');
+            const searchInput = document.getElementById('search-task');
+            searchInput.value = ''; 
+
+            taskListModal.innerHTML = "<p>Chargement des tâches...</p>"; 
+
+            fetch('https://script.google.com/macros/s/AKfycbwuhfaJnsZ4dWL-vfQNjcQrBqxopKfvkkgZqJsXlnenFKtooX0P71N9Y02FaXNKC0Symg/exec')
+                .then(response => response.json())
+                .then(data => {
+                    tasks = data; 
+                    renderTasks(tasks); 
+                })
+                .catch(error => {
+                    taskListModal.innerHTML = "<p>Une erreur s'est produite lors du chargement des tâches. Essayer à nouveau.</p>"; 
+                    console.error('Error:', error);
+                });
+
+            document.getElementById('taskModal').classList.add('show');
         }
 
-       
-        document.addEventListener('click', (event) => {
-            if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
-                closeSidebar();
-            }
-        });
-
-
-     function toggleOptions() {
-            const options = document.getElementById('options');
-            options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
+        function closeModal() {
+            document.getElementById('taskModal').classList.remove('show');
         }
 
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.add('active');
-        }
+        function renderTasks(taskList) {
+            const taskListModal = document.getElementById('task-list-modal');
+            taskListModal.innerHTML = '';
 
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.classList.remove('active');
-            const inputs = modal.querySelectorAll('input');
-            inputs.forEach(input => input.value = "");
-        }
-
-        
-
-        function confirmtarea() {
-      var formData = new FormData(document.getElementById('dataFormtarea'));
-
-      fetch('https://script.google.com/macros/s/AKfycbyJOQQb4-eCiOOWQeF8gwfZ_dIauOau2EfJjTRNdWnF1w9v7ShY4fEbjI3oOVuNv2rvSg/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Données soumises avec succès !');
-      })
-      .catch(error => {
-        alert('Error: ' + error);
-      });
-    }
-    function confirmequipe() {
-      var formData = new FormData(document.getElementById('dataFormequipe'));
-
-      fetch('https://script.google.com/macros/s/AKfycbwks_VIryulz7AhgAeCI62tzkl0BLkMBMIUdayBmurhH4jAMyM2haJKmXF24x-7rHTy/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Données soumises avec succès !');
-      })
-      .catch(error => {
-        alert('Error: ' + error);
-      });
-    }
-
-
-
-
-
-     function confirmSubmi() {
-      var formData = new FormData(document.getElementById('dataForm1'));
-
-      fetch('https://script.google.com/macros/s/AKfycbzmwN2wc24IjJYqlUyO20neyiSTbwppOw4kznvWDXeQVfxV1UMbq-1O8Sfx0yg1hxoBdw/exec', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Données soumises avec succès !');
-      })
-      .catch(error => {
-        alert('Error: ' + error);
-      });
-    }
-        const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-        document.getElementById("dateInput").value = today;
-         const modal = document.getElementById("myModal");
-        document.getElementById("openModal").onclick = () => modal.style.display = "block";
-        document.getElementById("closeModal").onclick = () => modal.style.display = "none";
-        window.onclick = (event) => {
-            if (event.target === modal) modal.style.display = "none";
-        };
-        
-       
-         function Contactez() {
-        
-        window.location.href = "https://aroma-rh.github.io/contact/";
-    }
-        $(document).ready(function() {
-            $('#equipe, #tarea').select2();
-        });
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute("data-theme");
-            document.documentElement.setAttribute("data-theme", currentTheme === "dark" ? "light" : "dark");
-        }
-        document.getElementById("date").value = new Date().toISOString().split('T')[0];
-        
-
-        function submitData() {
-            const equipe = document.getElementById("equipe").value;
-            const finca = document.getElementById("finca").value;
-            const date = document.getElementById("date").value;
-            const tarea = document.getElementById("tarea").value;
-            const numberPrs = document.getElementById("numberPrs").value;
-
-            if (!equipe || !finca || !date || !tarea || !numberPrs) {
-                alert("Veuillez remplir tous les champs obligatoires.");
+            if (taskList.length === 0) {
+                taskListModal.innerHTML = "<p>Il n'y a aucune tâche actuellement.</p>"; 
                 return;
             }
 
-           
-            document.getElementById("confirmationText").innerHTML = `
-                <strong>Equipe:</strong> ${equipe}<br>
-                <strong>Finca:</strong> ${finca}<br>
-                <strong>Date:</strong> ${date}<br>
-                <strong>Tarea:</strong> ${tarea}<br>
-                <strong>Number prs:</strong> ${numberPrs}
-            `;
-            document.getElementById("confirmationModal").style.display = "flex";
+            taskList.forEach(task => {
+                let checked = selectedTasks.includes(task.task) ? 'checked' : ''; 
+                let taskItem = `
+                    <label>
+                        <input type="checkbox" value="${task.task}" ${checked} onclick="toggleSelection('${task.task}')">
+                        ${task.task}
+                    </label>
+                `;
+                taskListModal.innerHTML += taskItem;
+            });
         }
 
-        function confirmSubmit() {
-            const equipe = document.getElementById("equipe").value;
-            const finca = document.getElementById("finca").value;
-            const date = document.getElementById("date").value;
-            const tarea = document.getElementById("tarea").value;
-            const numberPrs = document.getElementById("numberPrs").value;
-
-            const formData = {
-                equipe: equipe,
-                finca: finca,
-                date: date,
-                tarea: tarea,
-                numberPrs: numberPrs
-            };
-
-            
-            fetch("https://script.google.com/macros/s/AKfycbzl0nGLPT42SJiH35I-UBqt01nstU5WJ9XORkh72ZGLg7qEhRJK_oKdvpMfMpQkMJEt/exec", {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData)
-            })
-            
-            .catch(error => alert("erreur: " + error.message));
-
-            closeConfirmation();
-            document.getElementById("numberPrs").value=""
+        function filterTasks() {
+            const searchValue = document.getElementById('search-task').value.toLowerCase();
+            const filteredTasks = tasks.filter(task => task.task.toLowerCase().includes(searchValue));
+            renderTasks(filteredTasks); 
         }
 
-        function closeConfirmation() {
-            document.getElementById("confirmationModal").style.display = "none";
+        function toggleSelection(task) {
+            if (selectedTasks.includes(task)) {
+                selectedTasks = selectedTasks.filter(t => t !== task);
+            } else {
+                selectedTasks.push(task);
+            }
         }
+
+        function confirmSelection() {
+    const taskList = document.getElementById('selected-tasks');
+    taskList.innerHTML = "";
+
+    let total = 0; 
+
+    selectedTasks.forEach(task => {
+        let taskItem = `
+            <div class="task-item">
+                <span>${task}</span>
+                <input type="number" min="1" placeholder=" " oninput="updateTotal()">
+            </div>`;
+        taskList.innerHTML += taskItem;
+    });
+
+   
+    updateTotal();
+
+    closeModal();
+}
+
+function updateTotal() {
+    let total = 0;
+    const inputs = document.querySelectorAll('.task-item input[type="number"]');
+    inputs.forEach(input => {
+        total += parseInt(input.value) || 0;
+    });
+
+    document.getElementById('total-value').textContent = total;
+}
+
+function sendData() {
+    const date = document.getElementById('task-date').value;
+    const category = document.getElementById('task-category').value;
+    const FINCA = document.getElementById('finca').value;
+
+    const tasks = Array.from(document.querySelectorAll('.task-item')).map(task => {
+        const taskName = task.querySelector('span').textContent;
+        const countInput = task.querySelector('input[type="number"]');
+        const count = countInput ? parseInt(countInput.value) || 0 : 0;
+
+        return count > 0 ? { task: taskName, count } : null;
+    }).filter(task => task !== null);
+
+    if (!date || !category || tasks.length === 0) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+    }
+
+    const payload = { date, category, FINCA, tasks };
+
+    fetch('https://script.google.com/macros/s/AKfycbyY5tHJqLiMjjU2dkVYOJ5KGOV2rASndkQ3ZOV81EW9OuWzF55kRXS8H1ecw2QBh8dKQA/exec', {
+        method: 'POST',
+        mode:"no-cors",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        alert("Données envoyées avec succès !");
+        
+       
+        document.getElementById('task-date').value = '';
+        document.getElementById('task-category').value = '';
+        document.getElementById('finca').value = '';
+        document.querySelectorAll('.task-item input').forEach(input => {
+            input.value = '';
+        });
 
         
- 
-         fetch('https://script.google.com/macros/s/AKfycbxoy923OwLPZA7S2wq5qOjcp8xA1IVc-28vxSMXDCqobxt9keI_NRfQLwe9E1Y1w12OoQ/exec')
+        updateTotal();
+    })
+    .catch(error => console.error('Erreur:', error));
+}
+
+
+        fetch('https://script.google.com/macros/s/AKfycbxoy923OwLPZA7S2wq5qOjcp8xA1IVc-28vxSMXDCqobxt9keI_NRfQLwe9E1Y1w12OoQ/exec')
       .then(response => response.json())
       .then(data => {
-        const comboBox = document.getElementById('equipe');
+        const comboBox = document.getElementById('task-category');
         data.forEach(item => {
           const option = document.createElement('option');
           option.value = item;
@@ -776,32 +490,9 @@ button:active {
         });
       });
 
-       
-
-         fetch('https://script.google.com/macros/s/AKfycbxLSEPXBHctMIigbNugYuXB2DvUeHRUp0dxug3-bhoPP0_HduBj1LbSCdpl_UA25p1zdw/exec')
-      .then(response => response.json())
-      .then(data => {
-        const comboBox = document.getElementById('tarea');
-        data.forEach(item => {
-          const option = document.createElement('option');
-          option.value = item;
-          option.textContent = item;
-          comboBox.appendChild(option);
+      $(document).ready(function() {
+            $('#task-category').select2();
         });
-      });
-
-      fetch('https://script.google.com/macros/s/AKfycbxp1jPE24WoceMsU3pHIR0zj-8fnlSj0CTaQ5OBI1La8jMiwTYrhDd0TZJUSUfo0NqW-A/exec')
-      .then(response => response.json())
-      .then(data => {
-        const comboBox = document.getElementById('combobox');
-        data.forEach(item => {
-          const option = document.createElement('option');
-          option.value = item;
-          option.textContent = item;
-          comboBox.appendChild(option);
-        });
-      });
-  
     </script>
 </body>
 </html>
