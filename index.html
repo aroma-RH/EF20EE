@@ -300,6 +300,25 @@ button:hover {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .modal1 {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content1 {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body>
@@ -318,7 +337,7 @@ button:hover {
 
         <div class="task-list" id="selected-tasks"></div>
 
-        <button onclick="sendData()">Envoyer </button>
+        <button onclick="confirmSubmission()">Envoyer </button>
     </div>
 
     
@@ -333,9 +352,27 @@ button:hover {
             </div>
         </div>
     </div>
-    
+    <div class="modal1" id="confirmationModal">
+        <div class="modal-content1">
+            <p>Êtes-vous certain de vouloir envoyer ?</p>
+            <button onclick="sendData()">Yes</button>
+            <button onclick="closeModal()">No</button>
+        </div>
+    </div>
 
     <script>
+
+function confirmSubmission() {
+            if (selectedTasks.length === 0) {
+                alert("Please select at least one task.");
+                return;
+            }
+            document.getElementById("confirmationModal").style.display = "flex";
+        }
+        
+        function closeModal() {
+            document.getElementById("confirmationModal").style.display = "none";
+        }
 
 document.getElementById("task-date").value = new Date().toISOString().split('T')[0];
 
@@ -350,7 +387,7 @@ document.getElementById("task-date").value = new Date().toISOString().split('T')
 
             taskListModal.innerHTML = "<p>Chargement des tâches...</p>"; 
 
-            fetch('https://script.google.com/macros/s/AKfycbwuhfaJnsZ4dWL-vfQNjcQrBqxopKfvkkgZqJsXlnenFKtooX0P71N9Y02FaXNKC0Symg/exec')
+            fetch('https://script.google.com/macros/s/AKfycbxpr6RkAEwDWM-rJ6bL-KUl33oNECqJeGamHvfMvCCWv6MgF9318VDQ4qBQZPCPYoPDsA/exec')
                 .then(response => response.json())
                 .then(data => {
                     tasks = data; 
@@ -454,7 +491,7 @@ function sendData() {
 
     const payload = { date, category, FINCA, tasks };
 
-    fetch('https://script.google.com/macros/s/AKfycbyY5tHJqLiMjjU2dkVYOJ5KGOV2rASndkQ3ZOV81EW9OuWzF55kRXS8H1ecw2QBh8dKQA/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzVhA41GXZn6SbvYs257-F2ApFO83viJXvjLg79ETeeVQb1Kzv_IzIYbQE_nHk2Q2aS/exec', {
         method: 'POST',
         mode:"no-cors",
         headers: { 'Content-Type': 'application/json' },
