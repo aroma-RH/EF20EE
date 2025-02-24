@@ -89,7 +89,7 @@
         }
 
         .task-item {
-            background-color: #f9f9f9;
+            background-color: #5aff91;
             width: 80%;
             padding: 20px;
             border-radius: 8px;
@@ -219,7 +219,7 @@
     display: flex; 
     justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: #88b3ad;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -303,7 +303,7 @@ button:hover {
         .modal1 {
             display: none;
             position: fixed;
-            z-index: 1000;
+            
             left: 0;
             top: 0;
             width: 100%;
@@ -356,11 +356,16 @@ button:hover {
         <div class="modal-content1">
             <p>Êtes-vous certain de vouloir envoyer ?</p>
             <button onclick="sendData()">Yes</button>
-            <button onclick="closeModal()">No</button>
+            <button onclick="closeModal1()">No</button>
         </div>
     </div>
 
     <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    let today = new Date().toISOString().split('T')[0];
+    document.getElementById("task-date").value = today;
+  });
 
 function confirmSubmission() {
             if (selectedTasks.length === 0) {
@@ -370,7 +375,7 @@ function confirmSubmission() {
             document.getElementById("confirmationModal").style.display = "flex";
         }
         
-        function closeModal() {
+        function closeModal1() {
             document.getElementById("confirmationModal").style.display = "none";
         }
 
@@ -512,6 +517,7 @@ function sendData() {
         updateTotal();
     })
     .catch(error => console.error('Erreur:', error));
+    closeModal1();
 }
 
 
