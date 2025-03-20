@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <title>EFFECTIF</title>
   <style>
     /* Modern CSS Reset */
@@ -511,98 +514,97 @@
   </style>
 </head>
 <body>
-  <div class="counter" id="total-counter">0</div>
+    <div class="counter" id="total-counter">0</div>
 
-  <div class="container">
-    <div class="card">
-      <div class="form-toggle">
-        <button class="toggle-btn active" data-form="1">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-          Les Equipes
-        </button>
-        <button class="toggle-btn" data-form="2">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 11l3 3L22 4"></path>
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-          </svg>
-          Les Taches
-        </button>
-      </div>
-
-      <div class="form-content">
-        <div class="form-group">
-          <label class="form-label" for="date">Date</label>
-          <input type="date" id="date" class="form-input" value="">
+    <div class="container">
+      <div class="card">
+        <div class="form-toggle">
+          <button class="toggle-btn active" data-form="1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Les Équipes
+          </button>
+          <button class="toggle-btn" data-form="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            Les Tâches
+          </button>
         </div>
-
-        <div class="form-group">
-          <label class="form-label" for="category">Category</label>
-          <select id="category" class="form-input">
-            <option value="">Select a category</option>
-          </select>
+    
+        <div class="form-content">
+          <div class="form-group">
+            <label class="form-label" for="date">Date</label>
+            <input type="date" id="date" class="form-input" value="">
+          </div>
+    
+          <div class="form-group">
+            <label class="form-label" for="category">Catégorie</label>
+            <select id="category" class="form-input">
+              <option value="">Sélectionnez une catégorie</option>
+            </select>
+          </div>
+    
+          <button id="select-tasks" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14"></path>
+              <path d="M5 12h14"></path>
+            </svg>
+            Sélectionner les Tâches
+          </button>
+    
+          <div id="selected-tasks" class="task-list"></div>
+    
+          <button id="submit" class="btn btn-primary" style="display: none;">Soumettre</button>
         </div>
-
-        <button id="select-tasks" class="btn btn-primary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14"></path>
-            <path d="M5 12h14"></path>
+      </div>
+    </div>
+    
+    <!-- Modal de sélection des tâches -->
+    <div id="task-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Sélectionner des Tâches</h2>
+          <button class="modal-close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18"></path>
+              <path d="M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+    
+        <div class="search-container">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="M21 21l-4.35-4.35"></path>
           </svg>
-          Select Tasks
-        </button>
-
-        <div id="selected-tasks" class="task-list"></div>
-
-        <button id="submit" class="btn btn-primary" style="display: none;">Submit</button>
+          <input type="text" id="search" class="search-input" placeholder="Rechercher...">
+        </div>
+    
+        <div id="task-list" class="task-checkbox-list"></div>
+    
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+          <button class="btn btn-primary" id="confirm-selection">Terminé</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Task Selection Modal -->
-  <div id="task-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title">Select Tasks</h2>
-        <button class="modal-close">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 6L6 18"></path>
-            <path d="M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-
-      <div class="search-container">
-        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"></circle>
-          <path d="M21 21l-4.35-4.35"></path>
-        </svg>
-        <input type="text" id="search" class="search-input" placeholder="Search...">
-      </div>
-
-      <div id="task-list" class="task-checkbox-list"></div>
-
-      <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
-        <button class="btn btn-primary" id="confirm-selection">Done</button>
+    
+    <!-- Modal de confirmation -->
+    <div id="confirmation-modal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-title" style="margin-bottom: 1rem;">Confirmer l'envoi</h2>
+        <p style="color: var(--color-gray-600); margin-bottom: 1.5rem;">Êtes-vous sûr de vouloir soumettre ces données ?</p>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button class="btn" id="cancel-submit">Annuler</button>
+          <button class="btn btn-primary" id="confirm-submit">Confirmer</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div id="confirmation-modal" class="modal">
-    <div class="modal-content">
-      <h2 class="modal-title" style="margin-bottom: 1rem;">Confirm Submission</h2>
-      <p style="color: var(--color-gray-600); margin-bottom: 1.5rem;">Are you sure you want to submit this data?</p>
-      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
-        <button class="btn" id="cancel-submit">Cancel</button>
-        <button class="btn btn-primary" id="confirm-submit">Confirm</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // State management
     let activeForm = 1;
@@ -635,7 +637,7 @@
         categories = await response.json();
         
         const select = document.getElementById('category');
-        select.innerHTML = '<option value="">Select a category</option>';
+        select.innerHTML = '<option value="">Sélectionnez une catégorie</option>';
         categories.forEach(category => {
           const option = document.createElement('option');
           option.value = category;
@@ -643,8 +645,8 @@
           select.appendChild(option);
         });
       } catch (error) {
-        console.error('Error fetching categories:', error);
-        showError('Failed to load categories');
+        console.error('Erreur lors de la récupération des catégories:', error);
+        showError('Échec du chargement des catégories');
       }
     }
 
@@ -659,8 +661,8 @@
         tasks = await response.json();
         renderTaskList();
       } catch (error) {
-        console.error('Error fetching tasks:', error);
-        showError('Failed to load tasks');
+        console.error('Erreur lors de la récupération des tâches:', error);
+        showError('Échec du chargement des tâches');
       }
     }
 
@@ -668,7 +670,7 @@
     document.getElementById('select-tasks').addEventListener('click', () => {
       const category = document.getElementById('category').value;
       if (!category) {
-        showError('Please select a category first');
+        showError('Sélectionnez d abord EQUIPE / TACHE');
         return;
       }
       document.getElementById('task-modal').classList.add('show');
@@ -766,13 +768,13 @@
       const category = document.getElementById('category').value;
       
       if (!date || !category || !selectedTasks.length) {
-        showError('Please fill in all required fields');
+        showError('Veuillez remplir tous les champs obligatoires');
         return;
       }
 
       const tasksWithCount = selectedTasks.filter(task => task.count > 0);
       if (!tasksWithCount.length) {
-        showError('Please enter at least one task count');
+        showError('Veuillez saisir au moins un nombre de tâches');
         return;
       }
 
@@ -797,12 +799,12 @@
           body: JSON.stringify(payload)
         });
 
-        showSuccess('Data submitted successfully!');
+        showSuccess('effectif soumis avec succès!');
         resetForm();
         document.getElementById('confirmation-modal').classList.remove('show');
       } catch (error) {
-        console.error('Error submitting data:', error);
-        showError('Failed to submit data');
+        console.error('Erreur lors de la soumission effectif:', error);
+        showError('Échec de la soumission des effectif');
       }
     }
 
@@ -826,6 +828,9 @@
 
     // Initialize the app
     fetchCategories();
+    $(document).ready(function() {
+            $('#category').select2();
+        });
   </script>
 </body>
 </html>
